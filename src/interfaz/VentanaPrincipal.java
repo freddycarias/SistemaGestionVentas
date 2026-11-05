@@ -54,11 +54,10 @@ public class VentanaPrincipal extends JFrame {
             ventanaClientes.setVisible(true);
         });
 
-        btnVentas.addActionListener(e
-                -> JOptionPane.showMessageDialog(
-                        this,
-                        "Módulo de ventas en desarrollo."
-                )
+        btnVentas.addActionListener(e -> {
+            VentanaVentas ventanaVentas = new VentanaVentas();
+            ventanaVentas.setVisible(true);
+        }
         );
 
         btnReportes.addActionListener(e

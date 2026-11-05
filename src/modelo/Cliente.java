@@ -1,4 +1,3 @@
-
 package modelo;
 
 public class Cliente {
@@ -13,7 +12,7 @@ public class Cliente {
     }
 
     public Cliente(int idCliente, String nombre, String apellido,
-                String correo, String telefono) {
+            String correo, String telefono) {
         this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -59,5 +58,10 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido;
     }
 }
