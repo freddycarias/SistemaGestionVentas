@@ -1,7 +1,11 @@
 
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.SwingUtilities;
+
 import conexion.Conexion;
+import interfaz.VentanaPrincipal;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -9,10 +13,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+        SwingUtilities.invokeLater(() -> iniciarSistema());
+    }
+
+    private static void iniciarSistema() {
+
         String usuario = JOptionPane.showInputDialog(
             null,
             "Ingrese el usuario de MySQL:",
-            "Conexión a la base de datos",
+            "Inicio de sesión",
             JOptionPane.QUESTION_MESSAGE
         );
 
@@ -36,17 +45,24 @@ public class Main {
 
         String clave = new String(campoClave.getPassword());
 
-        try (Connection conexion =
-                Conexion.obtenerConexion(usuario, clave)) {
+        try {
+            Conexion.configurar(usuario.trim(), clave);
 
-            JOptionPane.showMessageDialog(
-                null,
-                "Conexión exitosa con sistema_ventas.",
-                "Conexión correcta",
-                JOptionPane.INFORMATION_MESSAGE
-            );
+            try (Connection conexion = Conexion.obtenerConexion()) {
+
+                if (!conexion.isValid(5)) {
+                    throw new SQLException(
+                        "La conexión con MySQL no es válida."
+                    );
+                }
+            }
+
+            VentanaPrincipal ventana = new VentanaPrincipal();
+            ventana.setVisible(true);
 
         } catch (SQLException e) {
+
+            Conexion.cerrarSesion();
 
             JOptionPane.showMessageDialog(
                 null,
@@ -58,4 +74,3 @@ public class Main {
         }
     }
 }
-
