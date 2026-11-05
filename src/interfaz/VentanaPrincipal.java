@@ -6,7 +6,6 @@ import javax.swing.*;
 public class VentanaPrincipal extends JFrame {
 
     public VentanaPrincipal() {
-
         setTitle("Sistema de Gestión de Ventas");
         setSize(750, 500);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -60,12 +59,9 @@ public class VentanaPrincipal extends JFrame {
         }
         );
 
-        btnReportes.addActionListener(e
-                -> JOptionPane.showMessageDialog(
-                        this,
-                        "Módulo de reportes en desarrollo."
-                )
-        );
+        btnReportes.addActionListener(e -> {
+            new VentanaReportes().setVisible(true);
+        });
 
         // Pie de ventana
         JLabel pie = new JLabel(
