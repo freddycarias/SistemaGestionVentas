@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ClienteDAO {
 
-    // Consultar todos los clientes.
+    // Consultar todos los clientes
     public List<Cliente> listar() throws SQLException {
 
         List<Cliente> clientes = new ArrayList<>();
@@ -21,11 +21,12 @@ public class ClienteDAO {
             ORDER BY id_cliente
             """;
 
-        try (Connection cn = Conexion.obtenerConexion();
-            PreparedStatement ps = cn.prepareStatement(sql);
+        try (Connection con = Conexion.obtenerConexion();
+            PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
+
                 Cliente cliente = new Cliente(
                     rs.getInt("id_cliente"),
                     rs.getString("nombre"),
@@ -41,42 +42,71 @@ public class ClienteDAO {
         return clientes;
     }
 
-    // Registrar un cliente nuevo.
+    // Registrar un cliente nuevo
     public boolean insertar(Cliente cliente) throws SQLException {
 
         String sql = """
-            INSERT INTO clientes (nombre, apellido, correo, telefono)
+            INSERT INTO clientes
+                (nombre, apellido, correo, telefono)
             VALUES (?, ?, ?, ?)
             """;
 
-        try (Connection cn = Conexion.obtenerConexion();
-            PreparedStatement ps = cn.prepareStatement(sql)) {
+        try (Connection con = Conexion.obtenerConexion();
+            PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellido());
-            ps.setString(3, cliente.getCorreo());
-            ps.setString(4, cliente.getTelefono());
+
+            if (cliente.getCorreo() == null
+                    || cliente.getCorreo().isBlank()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, cliente.getCorreo());
+            }
+
+            if (cliente.getTelefono() == null
+                    || cliente.getTelefono().isBlank()) {
+                ps.setNull(4, Types.VARCHAR);
+            } else {
+                ps.setString(4, cliente.getTelefono());
+            }
 
             return ps.executeUpdate() > 0;
         }
     }
 
-    // Actualizar un cliente existente.
+    // Actualizar un cliente existente
     public boolean actualizar(Cliente cliente) throws SQLException {
 
         String sql = """
             UPDATE clientes
-            SET nombre = ?, apellido = ?, correo = ?, telefono = ?
+            SET nombre = ?,
+                apellido = ?,
+                correo = ?,
+                telefono = ?
             WHERE id_cliente = ?
             """;
 
-        try (Connection cn = Conexion.obtenerConexion();
-            PreparedStatement ps = cn.prepareStatement(sql)) {
+        try (Connection con = Conexion.obtenerConexion();
+            PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellido());
-            ps.setString(3, cliente.getCorreo());
-            ps.setString(4, cliente.getTelefono());
+
+            if (cliente.getCorreo() == null
+                    || cliente.getCorreo().isBlank()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, cliente.getCorreo());
+            }
+
+            if (cliente.getTelefono() == null
+                    || cliente.getTelefono().isBlank()) {
+                ps.setNull(4, Types.VARCHAR);
+            } else {
+                ps.setString(4, cliente.getTelefono());
+            }
+
             ps.setInt(5, cliente.getIdCliente());
 
             return ps.executeUpdate() > 0;

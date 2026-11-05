@@ -1,8 +1,7 @@
-
 package interfaz;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -16,24 +15,24 @@ public class VentanaPrincipal extends JFrame {
 
         // Encabezado
         JLabel titulo = new JLabel(
-            "SISTEMA DE GESTIÓN DE VENTAS",
-            SwingConstants.CENTER
+                "SISTEMA DE GESTIÓN DE VENTAS",
+                SwingConstants.CENTER
         );
 
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         titulo.setBorder(BorderFactory.createEmptyBorder(
-            30, 10, 20, 10
+                30, 10, 20, 10
         ));
 
         add(titulo, BorderLayout.NORTH);
 
         // Panel de opciones
         JPanel panelOpciones = new JPanel(
-            new GridLayout(3, 1, 15, 15)
+                new GridLayout(3, 1, 15, 15)
         );
 
         panelOpciones.setBorder(
-            BorderFactory.createEmptyBorder(30, 150, 30, 150)
+                BorderFactory.createEmptyBorder(30, 150, 30, 150)
         );
 
         JButton btnClientes = new JButton("GESTIÓN DE CLIENTES");
@@ -50,36 +49,33 @@ public class VentanaPrincipal extends JFrame {
 
         add(panelOpciones, BorderLayout.CENTER);
 
-        // Acciones provisionales
-        btnClientes.addActionListener(e ->
-            JOptionPane.showMessageDialog(
-                this,
-                "Módulo de clientes en desarrollo."
-            )
+        btnClientes.addActionListener(e -> {
+            VentanaClientes ventanaClientes = new VentanaClientes();
+            ventanaClientes.setVisible(true);
+        });
+
+        btnVentas.addActionListener(e
+                -> JOptionPane.showMessageDialog(
+                        this,
+                        "Módulo de ventas en desarrollo."
+                )
         );
 
-        btnVentas.addActionListener(e ->
-            JOptionPane.showMessageDialog(
-                this,
-                "Módulo de ventas en desarrollo."
-            )
-        );
-
-        btnReportes.addActionListener(e ->
-            JOptionPane.showMessageDialog(
-                this,
-                "Módulo de reportes en desarrollo."
-            )
+        btnReportes.addActionListener(e
+                -> JOptionPane.showMessageDialog(
+                        this,
+                        "Módulo de reportes en desarrollo."
+                )
         );
 
         // Pie de ventana
         JLabel pie = new JLabel(
-            "Base de datos: sistema_ventas",
-            SwingConstants.CENTER
+                "Base de datos: sistema_ventas",
+                SwingConstants.CENTER
         );
 
         pie.setBorder(BorderFactory.createEmptyBorder(
-            10, 10, 20, 10
+                10, 10, 20, 10
         ));
 
         add(pie, BorderLayout.SOUTH);
@@ -91,10 +87,10 @@ public class VentanaPrincipal extends JFrame {
                     java.awt.event.WindowEvent e) {
 
                 int opcion = JOptionPane.showConfirmDialog(
-                    VentanaPrincipal.this,
-                    "¿Desea cerrar el sistema?",
-                    "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION
+                        VentanaPrincipal.this,
+                        "¿Desea cerrar el sistema?",
+                        "Confirmar salida",
+                        JOptionPane.YES_NO_OPTION
                 );
 
                 if (opcion == JOptionPane.YES_OPTION) {
