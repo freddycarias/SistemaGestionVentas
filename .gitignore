@@ -1,0 +1,17 @@
+
+# Archivos compilados de Java
+bin/
+out/
+*.class
+
+# Archivos temporales
+*.log
+.DS_Store
+
+# Configuración personal del editor
+.vscode/
+
+# Archivos de configuración con credenciales
+.env
+.env.*
+config.properties
