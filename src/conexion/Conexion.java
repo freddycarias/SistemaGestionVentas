@@ -13,13 +13,30 @@ public class Conexion {
         + "&serverTimezone=America/Guatemala"
         + "&allowPublicKeyRetrieval=true";
 
+    private static String usuario;
+    private static String clave;
+
     private Conexion() {
-        // Evita crear objetos de esta clase.
     }
 
-    public static Connection obtenerConexion(
-            String usuario, String clave) throws SQLException {
+    public static void configurar(String user, String password) {
+        usuario = user;
+        clave = password;
+    }
+
+    public static Connection obtenerConexion() throws SQLException {
+
+        if (usuario == null || clave == null) {
+            throw new SQLException(
+                "La conexión no ha sido configurada."
+            );
+        }
 
         return DriverManager.getConnection(URL, usuario, clave);
+    }
+
+    public static void cerrarSesion() {
+        usuario = null;
+        clave = null;
     }
 }
